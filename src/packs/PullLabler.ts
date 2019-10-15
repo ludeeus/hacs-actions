@@ -11,10 +11,14 @@ export async function PullLabler(client: github.GitHub, prNumber: number) {
     console.log("Changed files");
     console.log(String(ChangedFiles));
 
+    ChangedFiles.forEach(function(file) {
+      if (file.startsWith("documentation")) labels.push("Documentation");
+      if (file.startsWith("custom_components")) labels.push("Backend");
+      if (file.startsWith("frontend")) labels.push("Frontend");
+    })
+
     console.log("Adding lables");
     console.log(String(labels));
-
-    console.log(`The event payload: ${github.context.payload}`);
 
     if (labels.length !== 0) {
       await client.issues.addLabels({
