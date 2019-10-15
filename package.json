@@ -5,7 +5,8 @@
   "description": "TypeScript template action",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "push": "rm -R lib && npm install && npm run build && npm prune --production && git add . && git commit -m 'update'"
   },
   "repository": {
     "type": "git",
