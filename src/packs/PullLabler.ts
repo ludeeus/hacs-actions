@@ -14,6 +14,8 @@ export async function PullLabler(client: github.GitHub, prNumber: number) {
     console.log("Adding lables");
     console.log(String(labels));
 
+    console.log(`The event payload: ${github.context.payload}`);
+
     if (labels.length !== 0) {
       await client.issues.addLabels({
         owner: github.context.repo.owner,
