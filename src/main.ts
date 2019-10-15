@@ -2,20 +2,31 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 
 import { PullLabler }  from "./packs/PullLabler"
-import { getPrNumber }  from "./packs/getPrNumber"
+import { getPrNumber, getIssueNumber }  from "./packs/getNumbers"
 
 async function run() {
+  var actionType: string = "pull";
   try {
     const token = core.getInput('github-token', {required: true});
-    const prNumber = getPrNumber();
+    var actionNumber = getPrNumber();
+    
     const client = new github.GitHub(token);
 
-    if (!prNumber) {
-      console.log('Could not get pull request number from context, exiting');
-      return;
+    if (!actionNumber) {
+      actionNumber = getIssueNumber();
+      actionType = "issue";
+      if (!actionNumber) {
+        console.log('Could not get pull request/issue number from context, exiting');
+        return;
+      }
     }
 
-    await PullLabler(client, prNumber)
+    if (actionType === "pull") {
+      await PullLabler(client, actionNumber)
+    } else if (actionType === "issue") {
+
+    }
+    
 
 
   } catch (error) {

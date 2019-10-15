@@ -8,3 +8,12 @@ export function getPrNumber(): number | undefined {
 
   return pullRequest.number;
 }
+
+export function getIssueNumber(): number | undefined {
+  const issue = github.context.payload.issue;
+  if (!issue) {
+    return undefined;
+  }
+
+  return issue.number;
+}
