@@ -15,7 +15,7 @@ export async function PullLabler(client: github.GitHub, prNumber: number) {
     core.debug("Adding lables");
     core.debug(String(labels));
 
-    if (labels) {
+    if (labels.length !== 0) {
       await client.issues.addLabels({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
