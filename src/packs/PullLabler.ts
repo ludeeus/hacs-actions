@@ -13,8 +13,9 @@ export async function PullLabler(client: github.GitHub, prNumber: number) {
 
     ChangedFiles.forEach(function(file) {
       if (file.startsWith("documentation")) labels.push("Documentation");
-      if (file.startsWith("custom_components")) labels.push("Backend");
+      if (file.endsWith(".py")) labels.push("Backend");
       if (file.startsWith("frontend")) labels.push("Frontend");
+      if (file.startsWith("custom_components/hacs/frontend/")) labels.push("Frontend");
     })
 
     console.log("Adding lables");
