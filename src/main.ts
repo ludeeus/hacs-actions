@@ -1,19 +1,29 @@
 import * as core from '@actions/core';
-import {wait} from './wait'
+import * as github from '@actions/github';
+
+import { PullLabler }  from "./packs/PullLabler"
+import { getPrNumber }  from "./packs/getPrNumber"
 
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    console.log(`Waiting ${ms} milliseconds ...`)
+    const token = core.getInput('repo-token', {required: true});
+    const prNumber = getPrNumber();
+    const client = new github.GitHub(token);
 
-    core.debug((new Date()).toTimeString())
-    await wait(parseInt(ms, 10));
-    core.debug((new Date()).toTimeString())
+    if (!prNumber) {
+      console.log('Could not get pull request number from context, exiting');
+      return;
+    }
 
-    core.setOutput('time', new Date().toTimeString());
+    await PullLabler(client, prNumber)
+
+
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
 run();
+
+
+
