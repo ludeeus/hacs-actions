@@ -1,4 +1,3 @@
-import * as core from '@actions/core';
 import * as github from '@actions/github';
 
 import { getChangedFiles }  from "./getChangedFiles"
@@ -9,11 +8,11 @@ export async function PullLabler(client: github.GitHub, prNumber: number) {
 
     const ChangedFiles: string[] = await getChangedFiles(client, prNumber);
 
-    core.debug("Changed files");
-    core.debug(String(ChangedFiles));
+    console.log("Changed files");
+    console.log(String(ChangedFiles));
 
-    core.debug("Adding lables");
-    core.debug(String(labels));
+    console.log("Adding lables");
+    console.log(String(labels));
 
     if (labels.length !== 0) {
       await client.issues.addLabels({
