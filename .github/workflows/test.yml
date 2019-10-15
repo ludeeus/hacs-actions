@@ -5,9 +5,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: npm ci
-    - run: npm run build
-    - uses: ./
+    - uses: ludeeus/hacs-actions@master
       with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
