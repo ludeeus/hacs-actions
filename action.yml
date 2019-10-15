@@ -4,6 +4,7 @@ author: 'Your name or organization here'
 inputs:
   repo-token:              # change this
     description: 'TOKEN'
+    required: true
 runs:
   using: 'node12'
   main: 'lib/main.js'
