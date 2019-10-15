@@ -1,7 +1,8 @@
 import * as github from '@actions/github';
 
 const FunItems: string[] = [
-    "[this cute kitten 😺](https://www.youtube.com/watch?v=0Bmhjf0rKe8)"
+    "[this cute kitten 😺](https://www.youtube.com/watch?v=0Bmhjf0rKe8)",
+    "this awesome picture\n\n![image](https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Sunset_2007-1.jpg/1280px-Sunset_2007-1.jpg)"
 ]
 
 
