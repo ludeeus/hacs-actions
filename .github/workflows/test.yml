@@ -1,5 +1,5 @@
 name: "Test action"
-on: ["push"]
+on: ["push", "pull_request", "issue_comment", "issues"]
 
 jobs:
   test:
