@@ -1,9 +1,11 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { PullLabler }  from "./packs/PullLabler"
+
 import { getPrNumber, getIssueNumber }  from "./packs/getNumbers"
-import { NewIssue }  from "./packs/messages"
+
+import { Issue } from "./issue"
+import { pullRequest } from "./pullRequest"
 
 async function run() {
   var actionType: string = "pull";
@@ -21,21 +23,11 @@ async function run() {
     }
 
     if (actionType === "pull") {
-      await PullLabler(client, actionNumber)
+      await pullRequest(client)
+
     } else if (actionType === "issue") {
-      const issue: {owner: string; repo: string; number: number} = github.context.issue;
-
-      if (github.context.payload.action == "opened") {
-        await client.issues.createComment({
-          owner: issue.owner,
-          repo: issue.repo,
-          issue_number: actionNumber,
-          body: NewIssue
-        });
-      }
+      await Issue(client)
     }
-    
-
 
   } catch (error) {
     core.setFailed(error.message);
