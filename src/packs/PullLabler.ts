@@ -9,13 +9,17 @@ export async function PullLabler(client: github.GitHub, prNumber: number) {
 
     const ChangedFiles: string[] = await getChangedFiles(client, prNumber);
 
-    core.error("Adding lables");
-    core.error(String(ChangedFiles));
+    core.debug("Changed files");
+    core.debug(String(ChangedFiles));
 
-    await client.issues.addLabels({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      issue_number: prNumber,
-      labels: labels
-    });
+    core.debug("Adding lables");
+    core.debug(String(labels));
+
+    if (labels) {
+      await client.issues.addLabels({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        issue_number: prNumber,
+        labels: labels
+      })};
   }
