@@ -2,8 +2,7 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 
 import { CheckRepository } from "./packs/CheckRepository"
-import { IssueGreeter } from "./packs/IssueGreeter"
-import { PullGreeter } from "./packs/PullGreeter"
+import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { PullLabler } from "./packs/PullLabler"
 
 
