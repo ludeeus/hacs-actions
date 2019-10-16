@@ -2,11 +2,11 @@ import * as github from '@actions/github';
 
 import { getChangedFiles }  from "./getChangedFiles"
 
-export async function PullLabler(client: github.GitHub, prNumber: number) {
+export async function PullLabler(client: github.GitHub) {
 
     var labels: string[] = []
 
-    const ChangedFiles: string[] = await getChangedFiles(client, prNumber);
+    const ChangedFiles: string[] = await getChangedFiles(client, github.context.issue.number);
 
     console.log("Changed files");
     console.log(String(ChangedFiles));
@@ -25,7 +25,7 @@ export async function PullLabler(client: github.GitHub, prNumber: number) {
       await client.issues.addLabels({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
-        issue_number: prNumber,
+        issue_number: github.context.issue.number,
         labels: labels
       })};
   }
