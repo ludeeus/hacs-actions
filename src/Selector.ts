@@ -11,11 +11,11 @@ export async function Selector(select: string, client: github.GitHub) {
     const repository: string = core.getInput('repository')
     const categoty: string = core.getInput('repository')
 
+    if (repository && categoty) CheckRepository(repository, categoty);
+
     if (select.length === 0) {
         core.setFailed("You need to add an action.");
     }
-
-    if (repository && categoty) CheckRepository(repository, categoty);
 
     if (select === "IssueGreeter") await IssueGreeter(client);
 

@@ -1,6 +1,5 @@
-name: "HACS: Push action"
-on:
-  issue:
+name: "HACS: Issue action"
+on: issues
 
 jobs:
   test:
