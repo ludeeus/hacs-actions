@@ -4,6 +4,13 @@ import { getChangedFiles }  from "./getChangedFiles"
 
 export async function PullLabler(client: github.GitHub) {
 
+    // Remove current labels
+    await client.issues.removeLabels({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      issue_number: github.context.issue.number
+    })
+
     var labels: string[] = []
 
     const ChangedFiles: string[] = await getChangedFiles(client, github.context.issue.number);

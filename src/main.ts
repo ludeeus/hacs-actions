@@ -13,7 +13,6 @@ async function run() {
     }
 
 
-
     await Selector(core.getInput('action'), client)
 
   } catch (error) {
