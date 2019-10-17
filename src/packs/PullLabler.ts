@@ -5,6 +5,7 @@ import { getChangedFiles }  from "./getChangedFiles"
 export async function PullLabler(client: github.GitHub) {
 
     // Remove current labels
+    console.log("Removing lables");
     await client.issues.removeLabels({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
