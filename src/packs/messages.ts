@@ -21,3 +21,9 @@ When those are done, someone will manually ensure that that it's OK. 💃
 
 While you wait, you can have a look at ${FunItems[Math.floor(Math.random()*FunItems.length)]}
 `;
+
+export const HacktoberFestMessage: string = `
+## It's Hacktoberfest 🎉
+
+Make sure that you have signed up at https://hacktoberfest.digitalocean.com/
+`;
