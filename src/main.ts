@@ -1,15 +1,43 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { Selector } from "./Selector"
 
-async function run() {
+import { CheckRepository } from "./misc/CheckRepository"
+import { IssueGreeter, PullGreeter } from "./packs/Greeter"
+import { HacktoberFest } from "./packs/HacktoberFest"
+import { PullPayload, IssuePayload } from "./misc/contexts"
+
+
+async function ExecuteAction() {
   try {
     const client = new github.GitHub(core.getInput('github-token', {required: true}));
+    const repository: string = core.getInput('repository')
+    const categoty: string = core.getInput('categoty')
 
-    await Selector(client)
+    if (repository && categoty) {
+        CheckRepository(repository, categoty);
+        return
+    }
+
+    if (IssuePayload !== undefined) await IssueActions(client);
+    if (PullPayload !== undefined) await PullRequestActions(client);
 
   } catch (error) {
     core.setFailed(error.message);
   }
 }
-run();
+
+async function IssueActions(client: github.GitHub) {
+  console.log("Running IssueActions")
+  await IssueGreeter(client);
+}
+
+async function PullRequestActions(client: github.GitHub) {
+  console.log("Running PullRequestActions")
+  await PullGreeter(client);
+  await HacktoberFest(client);
+
+}
+
+
+
+ExecuteAction();
