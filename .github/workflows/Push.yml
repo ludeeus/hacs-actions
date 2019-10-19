@@ -13,4 +13,4 @@ jobs:
       - uses: ludeeus/hacs-actions@master
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-          modules: "IssueGreeter"
+          modules: "IssueGreeter", HacktoberFest

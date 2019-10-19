@@ -20,13 +20,15 @@ export async function Selector(modules: string, client: github.GitHub) {
         core.setFailed("You need to add an action.");
     }
 
-    const ComputedModules: string[] = modules.split(", ")
+    const ComputedModules: string[] = modules.split(",")
 
     ComputedModules.forEach(async function(module: string) {
-        if (module === "IssueGreeter") await IssueGreeter(client);
-        if (module === "PullLabler") await PullLabler(client);
-        if (module === "PullGreeter") await PullGreeter(client);
-        if (module === "HacktoberFest") await HacktoberFest(client);
+        if (module.length !== 0) {
+            if (module.trim() === "IssueGreeter") await IssueGreeter(client);
+            if (module.trim() === "PullLabler") await PullLabler(client);
+            if (module.trim() === "PullGreeter") await PullGreeter(client);
+            if (module.trim() === "HacktoberFest") await HacktoberFest(client);
+        }
     })
 
 
