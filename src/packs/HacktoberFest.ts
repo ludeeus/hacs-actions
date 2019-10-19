@@ -6,7 +6,7 @@ const isHacktoberfestLive = () => new Date().getMonth() == 9;
 
 export async function HacktoberFest(client: github.GitHub) {
     const PR = github.context.payload.pull_request;
-    if (isHacktoberfestLive && PR !== undefined ) {
+    if (isHacktoberfestLive) {
         if (github.context.payload.action == "opened") {
             console.log(`Adding HacktoberFest message to #${github.context.issue.number}`)
             await client.issues.createComment({
@@ -21,7 +21,7 @@ export async function HacktoberFest(client: github.GitHub) {
                 issue_number: github.context.issue.number,
                 labels: ["Hacktoberfest"]
               })
-        } else if (github.context.payload.action == "closed" && !PR.merged) {
+        } else if (github.context.payload.action == "closed" && !PR!.merged) {
             await client.issues.removeLabel({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
