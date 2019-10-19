@@ -1,13 +1,14 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { CheckRepository } from "./packs/CheckRepository"
+import { CheckRepository } from "./packs/misc/CheckRepository"
 import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { PullLabler } from "./packs/PullLabler"
 import { HacktoberFest } from "./packs/HacktoberFest"
 
 
 export async function Selector(client: github.GitHub) {
+    console.log("Running Selector")
     const repository: string = core.getInput('repository')
     const categoty: string = core.getInput('categoty')
 
@@ -22,6 +23,7 @@ export async function Selector(client: github.GitHub) {
 
 
 async function IssueActions(client: github.GitHub) {
+    console.log("Running IssueActions")
     const issue = github.context.payload.issue;
 
     await IssueGreeter(client);
@@ -30,6 +32,7 @@ async function IssueActions(client: github.GitHub) {
 }
 
 async function PullRequestActions(client: github.GitHub) {
+    console.log("Running PullRequestActions")
     const pull = github.context.payload.pull_request;
 
     await PullLabler(client);

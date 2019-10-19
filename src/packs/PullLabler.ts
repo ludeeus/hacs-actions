@@ -1,8 +1,9 @@
 import * as github from '@actions/github';
 
-import { getChangedFiles }  from "./getChangedFiles"
+import { getChangedFiles }  from "./misc/getChangedFiles"
 
 export async function PullLabler(client: github.GitHub) {
+    console.log("Running PullLabler")
 
     // Remove current labels
     console.log("Removing lables");

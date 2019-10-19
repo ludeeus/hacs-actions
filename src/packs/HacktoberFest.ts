@@ -15,6 +15,7 @@ export async function HacktoberFest(client: github.GitHub) {
               issue_number: github.context.issue.number,
               body: HacktoberFestMessage
             });
+            console.log("Adding Hacktoberfest label")
             await client.issues.addLabels({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
@@ -22,6 +23,7 @@ export async function HacktoberFest(client: github.GitHub) {
                 labels: ["Hacktoberfest"]
               })
         } else if (github.context.payload.action == "closed" && !PR!.merged) {
+          console.log("Removing Hactoberfest label")
             await client.issues.removeLabel({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
