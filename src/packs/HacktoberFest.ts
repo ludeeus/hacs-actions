@@ -5,7 +5,7 @@ import { HacktoberFestMessage }  from "./messages"
 const isHacktoberfestLive = () => new Date().getMonth() == 9;
 
 export async function HacktoberFest(client: github.GitHub) {
-    const PR = github.context.payload.pull_request || undefined;
+    const PR = github.context.payload.pull_request;
     if (isHacktoberfestLive && PR !== undefined ) {
         if (github.context.payload.action == "opened") {
             console.log(`Adding HacktoberFest message to #${github.context.issue.number}`)
@@ -28,12 +28,12 @@ export async function HacktoberFest(client: github.GitHub) {
                 issue_number: github.context.issue.number,
                 name: "Hacktoberfest"
               })
-              await client.issues.addLabels({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                issue_number: github.context.issue.number,
-                labels: ["invalid"]
-              })
+            await client.issues.addLabels({
+              owner: github.context.repo.owner,
+              repo: github.context.repo.repo,
+              issue_number: github.context.issue.number,
+              labels: ["invalid"]
+            })
         }
     }
 }

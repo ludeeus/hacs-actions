@@ -21,24 +21,30 @@ export async function Selector(modules: string, client: github.GitHub) {
     }
 
     const ComputedModules: string[] = modules.split(",")
-    await IssueActions(ComputedModules, client)
+    if (github.context.payload.issue !== undefined) await IssueActions(ComputedModules, client);
+    if (github.context.payload.pull_request !== undefined) await PullRequestActions(ComputedModules, client);
+}
 
-    ComputedModules.forEach(async function(module: string) {
+
+async function IssueActions(modules: string[], client: github.GitHub) {
+    const issue = github.context.payload.issue;
+
+    modules.forEach(async function(module: string) {
         if (module.length !== 0) {
             if (module.trim() === "IssueGreeter") await IssueGreeter(client);
-            if (module.trim() === "PullLabler") await PullLabler(client);
-            if (module.trim() === "PullGreeter") await PullGreeter(client);
             if (module.trim() === "HacktoberFest") await HacktoberFest(client);
         }
     })
 }
 
-
-async function IssueActions(modules: string[], client: github.GitHub) {
-    console.log(`Type?: ${github.context.payload.issue}`)
-    console.log(`Type?: ${github.context.payload.pull_request}`)
-}
-
 async function PullRequestActions(modules: string[], client: github.GitHub) {
+    const pull = github.context.payload.pull_request;
 
+    modules.forEach(async function(module: string) {
+        if (module.length !== 0) {
+            if (module.trim() === "PullLabler") await PullLabler(client);
+            if (module.trim() === "PullGreeter") await PullGreeter(client);
+            if (module.trim() === "HacktoberFest") await HacktoberFest(client);
+        }
+    })
 }
