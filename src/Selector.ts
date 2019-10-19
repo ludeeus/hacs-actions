@@ -21,6 +21,7 @@ export async function Selector(modules: string, client: github.GitHub) {
     }
 
     const ComputedModules: string[] = modules.split(",")
+    await IssueActions(ComputedModules, client)
 
     ComputedModules.forEach(async function(module: string) {
         if (module.length !== 0) {
@@ -30,7 +31,13 @@ export async function Selector(modules: string, client: github.GitHub) {
             if (module.trim() === "HacktoberFest") await HacktoberFest(client);
         }
     })
+}
 
 
+async function IssueActions(modules: string[], client: github.GitHub) {
+    console.log(`Event: ${github.context.eventName}`)
+}
+
+async function PullRequestActions(modules: string[], client: github.GitHub) {
 
 }
