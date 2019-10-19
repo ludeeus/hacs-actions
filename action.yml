@@ -5,6 +5,8 @@ inputs:
   github-token:              # change this
     description: 'TOKEN'
     required: true
+  modules:
+    description: A comma seperated list of modules to run
 runs:
   using: 'node12'
   main: 'lib/main.js'

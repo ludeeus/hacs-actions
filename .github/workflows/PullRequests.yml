@@ -10,8 +10,4 @@ jobs:
       - uses: ludeeus/hacs-actions@master
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-          action: "PullLabler"
-      - uses: ludeeus/hacs-actions@master
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          action: "PullGreeter"
+          modules: "PullLabler, PullGreeter, HacktoberFest"
