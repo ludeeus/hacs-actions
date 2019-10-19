@@ -16,8 +16,7 @@ async function run() {
       console.log(issue_data.data.state)
     }
 
-
-    await Selector(core.getInput('action'), client)
+    await Selector(core.getInput('modules'), client)
 
   } catch (error) {
     core.setFailed(error.message);

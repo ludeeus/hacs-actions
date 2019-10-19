@@ -7,7 +7,7 @@ import { PullLabler } from "./packs/PullLabler"
 import { HacktoberFest } from "./packs/HacktoberFest"
 
 
-export async function Selector(select: string[], client: github.GitHub) {
+export async function Selector(modules: string, client: github.GitHub) {
     const repository: string = core.getInput('repository')
     const categoty: string = core.getInput('categoty')
 
@@ -16,10 +16,13 @@ export async function Selector(select: string[], client: github.GitHub) {
         return
     }
 
-    if (select.length === 0) {
+    if (modules.length === 0) {
         core.setFailed("You need to add an action.");
     }
-    select.forEach(async function(module: string) {
+
+    const ComputedModules: string[] = modules.split(", ")
+
+    ComputedModules.forEach(async function(module: string) {
         if (module === "IssueGreeter") await IssueGreeter(client);
         if (module === "PullLabler") await PullLabler(client);
         if (module === "PullGreeter") await PullGreeter(client);

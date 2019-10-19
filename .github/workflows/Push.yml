@@ -5,8 +5,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: ludeeus/hacs-actions@master
-      with:
-        github-token: "${{ secrets.GITHUB_TOKEN }}"
-        repository: "ludeeus/hacs"
-        categoty: "integration"
+      - uses: ludeeus/hacs-actions@master
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          modules: 
+            - "IssueGreeter"
+      - uses: ludeeus/hacs-actions@master
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          modules: "IssueGreeter"
