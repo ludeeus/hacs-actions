@@ -1,10 +1,10 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { CheckRepository } from "./packs/misc/CheckRepository"
+import { CheckRepository } from "./misc/CheckRepository"
 import { IssueGreeter, PullGreeter } from "./packs/Greeter"
-import { PullLabler } from "./packs/PullLabler"
 import { HacktoberFest } from "./packs/HacktoberFest"
+import { PullPayload, IssuePayload } from "./misc/contexts"
 
 
 export async function Selector(client: github.GitHub) {
@@ -17,25 +17,22 @@ export async function Selector(client: github.GitHub) {
         return
     }
 
-    if (github.context.payload.issue !== undefined) await IssueActions(client);
-    if (github.context.payload.pull_request !== undefined) await PullRequestActions(client);
+    if (IssuePayload !== undefined) await IssueActions(client);
+    if (PullPayload !== undefined) await PullRequestActions(client);
 }
 
 
 async function IssueActions(client: github.GitHub) {
     console.log("Running IssueActions")
-    const issue = github.context.payload.issue;
+    const issue = IssuePayload;
 
     await IssueGreeter(client);
-    await HacktoberFest(client);
-
 }
 
 async function PullRequestActions(client: github.GitHub) {
     console.log("Running PullRequestActions")
-    const pull = github.context.payload.pull_request;
+    const pull = PullPayload;
 
-    await PullLabler(client);
     await PullGreeter(client);
     await HacktoberFest(client);
 

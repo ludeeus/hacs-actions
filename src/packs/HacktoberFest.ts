@@ -1,39 +1,43 @@
 /* eslint-disable TS2339 */
 import * as github from '@actions/github';
-import { HacktoberFestMessage }  from "./messages"
+import { HacktoberFestMessage }  from "../misc/messages"
+import { Issue, Payload, PullPayload } from "../misc/contexts"
 
 const isHacktoberfestLive = () => new Date().getMonth() == 9;
 
 export async function HacktoberFest(client: github.GitHub) {
-    const PR = github.context.payload.pull_request;
     if (isHacktoberfestLive) {
-        if (github.context.payload.action == "opened") {
-            console.log(`Adding HacktoberFest message to #${github.context.issue.number}`)
+        if (Payload.action == "opened") {
+            console.log(`Adding HacktoberFest message to #${Issue.number}`)
             await client.issues.createComment({
-              owner: github.context.issue.owner,
-              repo: github.context.issue.repo,
-              issue_number: github.context.issue.number,
+              owner: Issue.owner,
+              repo: Issue.repo,
+              issue_number: Issue.number,
               body: HacktoberFestMessage
             });
+
             console.log("Adding Hacktoberfest label")
             await client.issues.addLabels({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                issue_number: github.context.issue.number,
+              owner: Issue.owner,
+              repo: Issue.repo,
+                issue_number: Issue.number,
                 labels: ["Hacktoberfest"]
               })
-        } else if (github.context.payload.action == "closed" && !PR!.merged) {
+        }
+
+        if (Payload.action == "closed" && !PullPayload!.merged) {
           console.log("Removing Hactoberfest label")
             await client.issues.removeLabel({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                issue_number: github.context.issue.number,
+              owner: Issue.owner,
+              repo: Issue.repo,
+                issue_number: Issue.number,
                 name: "Hacktoberfest"
               })
+
             await client.issues.addLabels({
-              owner: github.context.repo.owner,
-              repo: github.context.repo.repo,
-              issue_number: github.context.issue.number,
+              owner: Issue.owner,
+              repo: Issue.repo,
+              issue_number: Issue.number,
               labels: ["invalid"]
             })
         }
