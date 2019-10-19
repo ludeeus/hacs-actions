@@ -1,4 +1,4 @@
-import * as github from '@actions/github';
+import { Sender } from "./contexts"
 
 const FunItems: string[] = [
     "[this cute kitten 😺](https://www.youtube.com/watch?v=0Bmhjf0rKe8)",
@@ -8,13 +8,13 @@ const FunItems: string[] = [
 
 
 export const NewIssue: string = `
-Hi @${github.context.payload.sender!.login} 👋
+Hi @${Sender!.login} 👋
 
 Make sure you have read the [issue guidelines](https://hacs.netlify.com/docs/issues) and that you filled out the **entire** template.
 `;
 
 export const NewPull: string = `
-Hi @${github.context.payload.sender!.login} 👋
+Hi @${Sender!.login} 👋
 
 Automatic tasks are now running some initial checks before this can be merged.
 When those are done, someone will manually ensure that that it's OK. 💃
