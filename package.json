@@ -3,7 +3,8 @@
   "private": true,
   "description": "TypeScript template action",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "push": "rm -R lib && npm install && npm run build && npm prune --production && git add . && git commit -m 'update'"
   },
   "repository": {
     "type": "git",
