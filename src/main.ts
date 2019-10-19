@@ -9,13 +9,6 @@ async function run() {
 
     await HacktoberFest(client)
 
-
-    if (core.getInput('action') === "Test") {
-      var issue_data = await client.issues.get(
-        {"owner": "ludeeus", "repo": "hacs-actions", "issue_number": github.context.issue.number})
-      console.log(issue_data.data.state)
-    }
-
     await Selector(core.getInput('modules'), client)
 
   } catch (error) {

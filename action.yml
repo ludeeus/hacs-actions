@@ -7,5 +7,4 @@ inputs:
     required: true
 runs:
   using: 'node12'
-  run: npm build
   main: 'lib/main.js'
