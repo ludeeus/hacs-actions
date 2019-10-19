@@ -6,7 +6,7 @@ export async function PullLabler(client: github.GitHub) {
 
     // Remove current labels
     console.log("Removing lables");
-    await (client as any).issues.removeLabels({
+    await client.issues.removeLabels({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       issue_number: github.context.issue.number
@@ -30,7 +30,7 @@ export async function PullLabler(client: github.GitHub) {
     console.log(String(labels));
 
     if (labels.length !== 0) {
-      await (client as any).issues.addLabels({
+      await client.issues.addLabels({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
         issue_number: github.context.issue.number,

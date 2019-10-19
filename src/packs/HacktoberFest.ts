@@ -9,26 +9,26 @@ export async function HacktoberFest(client: github.GitHub) {
     if (isHacktoberfestLive && PR !== undefined ) {
         if (github.context.payload.action == "opened") {
             console.log(`Adding HacktoberFest message to #${github.context.issue.number}`)
-            await (client as any).issues.createComment({
+            await client.issues.createComment({
               owner: github.context.issue.owner,
               repo: github.context.issue.repo,
               issue_number: github.context.issue.number,
               body: HacktoberFestMessage
             });
-            await (client as any).issues.addLabels({
+            await client.issues.addLabels({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 issue_number: github.context.issue.number,
                 labels: ["Hacktoberfest"]
               })
         } else if (github.context.payload.action == "closed" && !PR.merged) {
-            await (client as any).issues.removeLabel({
+            await client.issues.removeLabel({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 issue_number: github.context.issue.number,
                 name: "Hacktoberfest"
               })
-              await (client as any).issues.addLabels({
+              await client.issues.addLabels({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 issue_number: github.context.issue.number,

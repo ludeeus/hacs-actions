@@ -5,7 +5,7 @@ export async function getChangedFiles(
     client: github.GitHub,
     prNumber: number
   ): Promise<string[]> {
-    const listFilesResponse = await (client as any).pulls.listFiles({
+    const listFilesResponse = await client.pulls.listFiles({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       pull_number: prNumber
