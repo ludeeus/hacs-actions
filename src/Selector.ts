@@ -4,9 +4,10 @@ import * as github from '@actions/github';
 import { CheckRepository } from "./packs/CheckRepository"
 import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { PullLabler } from "./packs/PullLabler"
+import { HacktoberFest } from "./packs/HacktoberFest"
 
 
-export async function Selector(select: string, client: github.GitHub) {
+export async function Selector(select: string[], client: github.GitHub) {
     const repository: string = core.getInput('repository')
     const categoty: string = core.getInput('categoty')
 
@@ -18,10 +19,13 @@ export async function Selector(select: string, client: github.GitHub) {
     if (select.length === 0) {
         core.setFailed("You need to add an action.");
     }
+    select.forEach(async function(module: string) {
+        if (module === "IssueGreeter") await IssueGreeter(client);
+        if (module === "PullLabler") await PullLabler(client);
+        if (module === "PullGreeter") await PullGreeter(client);
+        if (module === "HacktoberFest") await HacktoberFest(client);
+    })
 
-    if (select === "IssueGreeter") await IssueGreeter(client);
 
-    if (select === "PullLabler") await PullLabler(client);
-    if (select === "PullGreeter") await PullGreeter(client);
 
 }
