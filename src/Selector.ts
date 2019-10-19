@@ -35,7 +35,8 @@ export async function Selector(modules: string, client: github.GitHub) {
 
 
 async function IssueActions(modules: string[], client: github.GitHub) {
-    console.log(`Event: ${github.context.eventName}`)
+    console.log(`Type?: ${github.context.payload.issue}`)
+    console.log(`Type?: ${github.context.payload.pull_request}`)
 }
 
 async function PullRequestActions(modules: string[], client: github.GitHub) {
