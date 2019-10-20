@@ -5,6 +5,7 @@ import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { HacktoberFest } from "./packs/HacktoberFest"
 import { Payload, PullPayload, IssuePayload } from "./misc/contexts"
 import { CommonCheck } from "./checks/common"
+import { NewDefaultRepository } from "./packs/NewDefaultRepository"
 
 
 async function ExecuteAction() {
@@ -38,6 +39,7 @@ async function PullRequestActions(client: github.GitHub) {
   console.log("Running PullRequestActions")
   await PullGreeter(client);
   await HacktoberFest(client);
+  await NewDefaultRepository(client)
 
 }
 

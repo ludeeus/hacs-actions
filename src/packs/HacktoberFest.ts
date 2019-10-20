@@ -37,7 +37,7 @@ export async function HacktoberFest(client: github.GitHub) {
           })
         }
 
-        if (Payload.action == "opened" || Payload.action == "reopened") {
+        if (Payload.action == "opened") {
             console.log(`Adding HacktoberFest message to #${Issue.number}`)
             await client.issues.createComment({
               owner: Issue.owner,

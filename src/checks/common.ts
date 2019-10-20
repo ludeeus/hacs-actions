@@ -121,6 +121,3 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     if (category == "integration") await IntegartionCheck(owner, repo, client);
 
 } 
-
-
-//CommonCheck()
