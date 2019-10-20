@@ -32,7 +32,6 @@ async function CheckImportType(owner: string, repo: string, client: github.GitHu
 
         readme = Base64.decode(EncodedReadme.data["content"]);
 
-        console.log(readme)
         if (readme === undefined) throw "error"
         if (readme.includes("type: module") || readme.includes("type: js")) {
             core.info(`✅  JS import type defined`);
