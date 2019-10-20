@@ -4,6 +4,7 @@ import * as github from '@actions/github';
 import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { HacktoberFest } from "./packs/HacktoberFest"
 import { PullPayload, IssuePayload } from "./misc/contexts"
+import { CommonCheck } from "./checks/common"
 
 
 async function ExecuteAction() {
@@ -13,7 +14,7 @@ async function ExecuteAction() {
     const categoty: string = core.getInput('categoty')
 
     if (repository && categoty) {
-        //CheckRepository(repository, categoty);
+        await CommonCheck()
         return
     }
 

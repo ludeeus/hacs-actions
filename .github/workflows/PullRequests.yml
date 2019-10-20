@@ -11,3 +11,8 @@ jobs:
       - uses: hacs/actions@master
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: hacs/actions@master
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          repository: "custom-components/hacs"
+          category: "integration"

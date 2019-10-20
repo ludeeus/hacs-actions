@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import * as github from '@actions/github';
 import Octokit from "@octokit/rest";
 //import { Sender } from "../misc/contexts"
 
@@ -23,10 +24,19 @@ export async function CommonCheck(owner: string = "custom-components", repo: str
 
     // Check if sender owns the repo.
     if (Sender !== undefined) {
-        if (owner === Sender.login) {
+        if (owner !== Sender.login) {
             core.info(`✅  ${Sender.login} is the owner of ${owner}/${repo}`);
         } else {
             // TODO: Create a failed status check/"issue" message.
+            await octokit.checks.create({
+                owner: owner,
+                repo: repo,
+                name: "Submitter is owner, this can fail but will require a manual review.",
+                head_sha: github.context.sha,
+                conclusion: "action_required",
+                details_url: ""
+                
+            })
             core.error(`❌  ${Sender.login} is not the owner of ${owner}/${repo}`);
         }
     }
