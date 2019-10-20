@@ -46,7 +46,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     }
 
     // Check if repository is archived
-    if (repository.data["archived"]) {
+    if (repository.data["archived"] === false) {
         core.info(`✅  Not archived.`);
     } else {
         core.setFailed(`❌  Not archived.`);
@@ -54,7 +54,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     }
 
     // Check if repository is a fork
-    if (!repository.data["fork"]) {
+    if (repository.data["fork"] === false) {
         core.info(`✅  Not a fork.`);
     } else {
         core.error(`❌  Not a fork.`);
