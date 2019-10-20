@@ -1,4 +1,3 @@
-/* eslint-disable TS2339 */
 import * as github from '@actions/github';
 import { HacktoberFestMessage }  from "../misc/messages"
 import { Issue, Payload, PullPayload } from "../misc/contexts"

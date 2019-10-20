@@ -6,6 +6,8 @@ import { IntegartionCheck } from "./IntegartionCheck"
 
 export async function CommonCheck(owner: string, repo: string, category: string, client: github.GitHub) {
 
+    console.log(`testing ${owner}/${repo} with category ${category}`)
+
     // Check if repository exists
     try {
         var repository = await client.repos.get({owner: owner, repo: repo})

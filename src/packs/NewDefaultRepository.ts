@@ -3,6 +3,8 @@ import { Issue } from "../misc/contexts"
 import { CommonCheck } from "../checks/common"
 
 export async function NewDefaultRepository(client: github.GitHub) {
+    // TODO: Enable the real check
+    //if (github.context.repo.owner === "hacs" && github.context.repo.repo === "repositories") {
     if (github.context.repo.owner !== "hacs" && github.context.repo.repo !== "repositories") {
         console.log("Running NewDefaultRepository")
 

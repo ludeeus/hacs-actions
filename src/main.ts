@@ -6,6 +6,7 @@ import { HacktoberFest } from "./packs/HacktoberFest"
 import { Payload, PullPayload, IssuePayload } from "./misc/contexts"
 import { CommonCheck } from "./checks/common"
 import { NewDefaultRepository } from "./packs/NewDefaultRepository"
+import { ClearTempLabel } from "./packs/ClearTempLabel"
 
 
 async function ExecuteAction() {
@@ -40,7 +41,7 @@ async function PullRequestActions(client: github.GitHub) {
   await PullGreeter(client);
   await HacktoberFest(client);
   await NewDefaultRepository(client)
-
+  await ClearTempLabel(client)
 }
 
 
