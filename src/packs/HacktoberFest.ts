@@ -33,13 +33,16 @@ export async function HacktoberFest(client: github.GitHub) {
             repo: Issue.repo,
             issue_number: Issue.number
           })
-          console.log(currentLabels)
-            await client.issues.removeLabel({
-              owner: Issue.owner,
-              repo: Issue.repo,
-              issue_number: Issue.number,
-              name: "Hacktoberfest"
-              })
+
+          JSON.parse(String(currentLabels.data["labels"])).forEach(async element => {
+            if (element === "Hacktoberfest" )
+              await client.issues.removeLabel({
+                owner: Issue.owner,
+                repo: Issue.repo,
+                issue_number: Issue.number,
+                name: "Hacktoberfest"
+                })
+          })
 
             await client.issues.addLabels({
               owner: Issue.owner,
