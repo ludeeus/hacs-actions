@@ -3,7 +3,7 @@ import * as github from '@actions/github';
 
 import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { HacktoberFest } from "./packs/HacktoberFest"
-import { PullPayload, IssuePayload } from "./misc/contexts"
+import { Payload, PullPayload, IssuePayload } from "./misc/contexts"
 import { CommonCheck } from "./checks/common"
 
 
@@ -14,7 +14,7 @@ async function ExecuteAction() {
     const category: string = core.getInput('category')
 
     if (repository.length !== 0 
-      && category.length !== 0) {
+      && category.length !== 0 && Payload.action == "closed") {
         var owner = repository.split("/")[0]
         var repo = repository.split("/")[1]
         await CommonCheck(owner, repo, category, client)
