@@ -172,5 +172,5 @@ async function CategoryChecks(category, owner, repo, client) {
     if (category == "theme") await ThemeCheck(owner, repo, client);
     if (category == "appdaemon") await AppDaemonCheck(owner, repo, client);
     if (category == "python_script") await PythonScriptCheck(owner, repo, client);
-    if (category == "list") await PythonScriptCheck(owner, repo, client);
+    if (category == "list") await IntegartionCheck(owner, repo, client);
 }
