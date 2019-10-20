@@ -77,7 +77,7 @@ async function CheckDist(owner: string, repo: string, client: github.GitHub) {
         var DistContents = await client.repos.getContents({
             owner: owner,
             repo: repo,
-            path: "disc"
+            path: "dist"
         });
 
         (DistContents.data as [any]).forEach(element => {
@@ -128,13 +128,13 @@ async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
     ]
     console.log(valid_names)
     try {
-        var DistContents = await client.repos.getContents({
+        var RootContents = await client.repos.getContents({
             owner: owner,
             repo: repo,
-            path: "disc"
+            path: ""
         });
 
-        (DistContents.data as [any]).forEach(element => {
+        (RootContents.data as [any]).forEach(element => {
             console.log(element.name)
             if (element.name.endswith(".js")) {
                 if (valid_names.includes(element.name)) pluginExist = true
