@@ -109,9 +109,9 @@ export async function CommonCheck(owner: string, repo: string, category: string,
             repo: repo,
             path: "hacs.json"
         })
-        var decoded = JSON.parse(new Buffer(hacsManifest.data["content"], 'base64').toString('utf-8'));
+        var hacsManifestDecoded = JSON.parse(new Buffer(hacsManifest.data["content"], 'base64').toString('utf-8'));
 
-        if (!decoded["name"]) throw "Data not correct";
+        if (!hacsManifestDecoded["name"]) throw "Data not correct";
         core.info(`✅  hacs.json`);
     } catch (error) {
         core.setFailed(`❌  hacs.json`);
@@ -124,8 +124,44 @@ export async function CommonCheck(owner: string, repo: string, category: string,
         return
     }
 
+    // Get INFO.md
+    if (!hacsManifestDecoded["render_readme"]) {
+        try {
+            var InfoExists = false;
+            var BaseFiles = await client.repos.getContents({
+                owner: owner,
+                repo: repo,
+                path: ""
+            });
+    
+            (BaseFiles.data as [any]).forEach(element => {
+                if (String(element.name).toLowerCase() === "info") InfoExists = true;
+                if (String(element.name).toLowerCase() === "info.md") InfoExists = true;
+            });
+    
+            if (!InfoExists) throw "README does not exist";
+    
+            core.info(`✅  INFO`);
+    
+        } catch (error) {
+            core.setFailed(`❌  INFO`);
+            await client.issues.createComment({
+                owner: Issue.owner,
+                repo: Issue.repo,
+                issue_number: Issue.number,
+                body: `It does not look a [INFO](https://hacs.xyz/docs/publish/start#infomd) file exist in the repository.`
+              });
+            return
+        }
+    }
+
 
     // Category spesific checks.
+    await CategoryChecks(category, owner, repo, client)
+
+} 
+
+async function CategoryChecks(category, owner, repo, client) {
     const validCategories = ["integration", "plugin", "theme", "appdaemon", "python_script"]
     if (!validCategories.includes(category)) core.setFailed(`${category} is not valid. (${validCategories})`);
 
@@ -135,5 +171,4 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     if (category == "theme") await ThemeCheck(owner, repo, client);
     if (category == "appdaemon") await AppDaemonCheck(owner, repo, client);
     if (category == "python_script") await PythonScriptCheck(owner, repo, client);
-
-} 
+}
