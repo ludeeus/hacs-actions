@@ -2,6 +2,10 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { Issue, Sender } from "../misc/contexts"
 import { IntegartionCheck } from "./IntegartionCheck"
+import { ThemeCheck } from "./ThemeCheck"
+import { PluginCheck } from "./PluginCheck"
+import { AppDaemonCheck } from "./AppDaemonCheck"
+import { PythonScriptCheck } from "./PythonScriptCheck"
 
 
 export async function CommonCheck(owner: string, repo: string, category: string, client: github.GitHub) {
@@ -124,6 +128,12 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     // Category spesific checks.
     const validCategories = ["integration", "plugin", "theme", "appdaemon", "python_script"]
     if (!validCategories.includes(category)) core.setFailed(`${category} is not valid. (${validCategories})`);
+
+    
     if (category == "integration") await IntegartionCheck(owner, repo, client);
+    if (category == "plugin") await PluginCheck(owner, repo, client);
+    if (category == "theme") await ThemeCheck(owner, repo, client);
+    if (category == "appdaemon") await AppDaemonCheck(owner, repo, client);
+    if (category == "python_script") await PythonScriptCheck(owner, repo, client);
 
 } 

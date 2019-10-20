@@ -1,6 +1,6 @@
 import * as github from '@actions/github';
 import { Issue } from "../misc/contexts"
-import { CommonCheck } from "../checks/common"
+import { CommonCheck } from "../checks/CommonCheck"
 
 export async function NewDefaultRepository(client: github.GitHub) {
     // TODO: Enable the real check

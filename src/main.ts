@@ -4,7 +4,7 @@ import * as github from '@actions/github';
 import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { HacktoberFest } from "./packs/HacktoberFest"
 import { Payload, PullPayload, IssuePayload } from "./misc/contexts"
-import { CommonCheck } from "./checks/common"
+import { CommonCheck } from "./checks/CommonCheck"
 import { NewDefaultRepository } from "./packs/NewDefaultRepository"
 import { ClearTempLabel } from "./packs/ClearTempLabel"
 
