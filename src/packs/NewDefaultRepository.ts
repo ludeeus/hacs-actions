@@ -1,4 +1,5 @@
 import * as github from '@actions/github';
+import * as core from '@actions/core';
 import { Issue } from "../misc/contexts"
 import { CommonCheck } from "../checks/CommonCheck"
 import { Base64 } from 'js-base64';
@@ -13,10 +14,15 @@ export async function NewDefaultRepository(client: github.GitHub) {
         var changedFiles = await getChangedFiles(client, Issue.number)
 
         changedFiles.forEach(async element => {
-            var changed = await getFileDiff(client, Issue.number, element)
-            var owner = changed[0].split("/")[0]
-            var repo = changed[0].split("/")[1]
-            await CommonCheck(owner, repo, element, client)
+            try {
+                var changed = await getFileDiff(client, Issue.number, element)
+                var owner = changed[0].split("/")[0]
+                var repo = changed[0].split("/")[1]
+                await CommonCheck(owner, repo, element, client)
+            } catch (error) {
+                core.setFailed("Something went wrong.");
+              }
+            
         });
     }
 }
