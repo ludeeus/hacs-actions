@@ -168,6 +168,16 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     // Category spesific checks.
     await CategoryChecks(category, owner, repo, client)
 
+    // If we get here, it's probably good.
+    client.pulls.createReview({
+        owner: Issue.owner,
+        repo: Issue.repo,
+        pull_number: Issue.number,
+        commit_id: github.context.sha,
+        event: "APPROVE",
+        body: "LGTM! :dolphine:"
+    })
+
 } 
 
 async function CategoryChecks(category, owner, repo, client) {
