@@ -45,6 +45,14 @@ export async function CommonCheck(owner: string, repo: string, category: string,
         }
     }
 
+    // Check if repository is archived
+    if (repository.data["archived"]) {
+        core.info(`✅  Not archived.`);
+    } else {
+        core.setFailed(`❌  Not archived.`);
+        return
+    }
+
     // Check if repository is a fork
     if (!repository.data["fork"]) {
         core.info(`✅  Not a fork.`);
@@ -163,7 +171,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
 } 
 
 async function CategoryChecks(category, owner, repo, client) {
-    const validCategories = ["integration", "plugin", "theme", "appdaemon", "python_script", "list"]
+    const validCategories = ["integration", "plugin", "theme", "appdaemon", "python_script"]
     if (!validCategories.includes(category)) core.setFailed(`${category} is not valid. (${validCategories})`);
 
     
@@ -172,5 +180,5 @@ async function CategoryChecks(category, owner, repo, client) {
     if (category == "theme") await ThemeCheck(owner, repo, client);
     if (category == "appdaemon") await AppDaemonCheck(owner, repo, client);
     if (category == "python_script") await PythonScriptCheck(owner, repo, client);
-    if (category == "list") await IntegartionCheck(owner, repo, client);
+
 }
