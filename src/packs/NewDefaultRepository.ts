@@ -58,7 +58,12 @@ async function getFileDiff(client: github.GitHub, prNumber: number, file: string
 
     var Decoded = JSON.parse(new Buffer(Contents["content"], 'base64').toString('utf-8'));
 
+    var NewItems = []
+
+    Decoded.forEach(element => {
+        ChangedDecoded.pop(element)
+    });
+
 
     console.log(ChangedDecoded)
-    console.log(Decoded)
   }
