@@ -81,9 +81,7 @@ async function CheckDist(owner: string, repo: string, client: github.GitHub) {
         });
 
         (DistContents.data as [any]).forEach(element => {
-            if (element.name.endswith(".js")) {
-                if (valid_names.includes(element.name)) pluginExist = true
-            }
+            if (valid_names.includes(element.name)) pluginExist = true
         });
         if (pluginExist) return true;
     } catch (error) {
@@ -107,9 +105,7 @@ async function CheckRelease(owner: string, repo: string, client: github.GitHub) 
         });
 
         (ReleaseContents.data.assets as [any]).forEach(element => {
-            if (element.name.endswith(".js")) {
-                if (valid_names.includes(element.name)) pluginExist = true
-            }
+            if (valid_names.includes(element.name)) pluginExist = true
         });
         if (pluginExist) return true;
     } catch (error) {
@@ -136,9 +132,7 @@ async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
 
         (RootContents.data as [any]).forEach(element => {
             console.log(element.name)
-            if (element.name.endswith(".js")) {
-                if (valid_names.includes(element.name)) pluginExist = true
-            }
+            if (valid_names.includes(element.name)) pluginExist = true
         });
         if (pluginExist) return true;
     } catch (error) {
