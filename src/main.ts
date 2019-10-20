@@ -13,7 +13,7 @@ async function ExecuteAction() {
     const repository: string = core.getInput('repository')
     const categoty: string = core.getInput('categoty')
 
-    if (repository && categoty) {
+    if (repository.length !== 0 && categoty.length !== 0) {
         await CommonCheck()
         return
     }
