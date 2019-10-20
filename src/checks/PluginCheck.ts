@@ -46,49 +46,10 @@ async function CheckImportType(owner: string, repo: string, client: github.GitHu
 
 async function CheckPluginLocation(owner: string, repo: string, client: github.GitHub) {
     var pluginExist = false
-    const valid_names = [
-        `${repo.replace("lovelace-", "")}.js`,
-        `${repo}.js`,
-        `${repo}.umd.js`,
-        `${repo}-bundle.js`,
-    ]
-
     try {
-        var DistContents = await client.repos.getContents({
-            owner: owner,
-            repo: repo,
-            path: "disc"
-        });
-
-        (DistContents.data as [any]).forEach(element => {
-            if (element.name.endswith(".js")) {
-                if (valid_names.includes(".js")) pluginExist = true
-            }
-        });
-
-        var ReleaseContents = await client.repos.getLatestRelease({
-            owner: owner,
-            repo: repo
-        });
-
-        (ReleaseContents.data.assets as [any]).forEach(element => {
-            if (element.name.endswith(".js")) {
-                if (valid_names.includes(".js")) pluginExist = true
-            }
-        });
-
-
-        var RootContents = await client.repos.getContents({
-            owner: owner,
-            repo: repo,
-            path: ""
-        });
-
-        (RootContents.data as [any]).forEach(element => {
-            if (element.name.endswith(".js")) {
-                if (valid_names.includes(".js")) pluginExist = true
-            }
-        });
+        if (!pluginExist) pluginExist = await CheckDist(owner, repo, client)
+        if (!pluginExist) pluginExist = await CheckRelease(owner, repo, client)
+        if (!pluginExist) pluginExist = await CheckRoot(owner, repo, client)
 
         if (!pluginExist) throw "error"
         core.info(`✅  Plugin exist`);
@@ -103,4 +64,84 @@ async function CheckPluginLocation(owner: string, repo: string, client: github.G
           });
         return
     }
+}
+
+async function CheckDist(owner: string, repo: string, client: github.GitHub) {
+    var pluginExist = false
+    const valid_names = [
+        `${repo.replace("lovelace-", "")}.js`,
+        `${repo}.js`,
+        `${repo}.umd.js`,
+        `${repo}-bundle.js`,
+    ]
+    try {
+        var DistContents = await client.repos.getContents({
+            owner: owner,
+            repo: repo,
+            path: "disc"
+        });
+
+        (DistContents.data as [any]).forEach(element => {
+            if (element.name.endswith(".js")) {
+                if (valid_names.includes(".js")) pluginExist = true
+            }
+        });
+        if (pluginExist) return true;
+    } catch (error) {
+        core.debug(error)
+    }
+    return false
+}
+
+async function CheckRelease(owner: string, repo: string, client: github.GitHub) {
+    var pluginExist = false
+    const valid_names = [
+        `${repo.replace("lovelace-", "")}.js`,
+        `${repo}.js`,
+        `${repo}.umd.js`,
+        `${repo}-bundle.js`,
+    ]
+    try {
+        var ReleaseContents = await client.repos.getLatestRelease({
+            owner: owner,
+            repo: repo
+        });
+
+        (ReleaseContents.data.assets as [any]).forEach(element => {
+            if (element.name.endswith(".js")) {
+                if (valid_names.includes(".js")) pluginExist = true
+            }
+        });
+        if (pluginExist) return true;
+    } catch (error) {
+        core.debug(error)
+    }
+    return false
+}
+
+async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
+    var pluginExist = false
+    const valid_names = [
+        `${repo.replace("lovelace-", "")}.js`,
+        `${repo}.js`,
+        `${repo}.umd.js`,
+        `${repo}-bundle.js`,
+    ]
+    try {
+        var DistContents = await client.repos.getContents({
+            owner: owner,
+            repo: repo,
+            path: "disc"
+        });
+
+        (DistContents.data as [any]).forEach(element => {
+            if (element.name.endswith(".js")) {
+                if (valid_names.includes(".js")) pluginExist = true
+            }
+        });
+        if (pluginExist) return true;
+    } catch (error) {
+        core.debug(error)
+    }
+    return false
 }
