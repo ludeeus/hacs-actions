@@ -175,7 +175,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
         pull_number: Issue.number,
         commit_id: github.context.sha,
         event: "APPROVE",
-        body: "LGTM! :dolphine:"
+        body: "LGTM! 🎉"
     })
 
 } 
