@@ -6,7 +6,6 @@ import { Issue } from "../misc/contexts"
 export async function PluginCheck(owner: string, repo: string, client: github.GitHub) {
     await CheckImportType(owner, repo, client)
     await CheckPluginLocation(owner, repo, client)
-
 }
 
 
@@ -83,7 +82,7 @@ async function CheckDist(owner: string, repo: string, client: github.GitHub) {
 
         (DistContents.data as [any]).forEach(element => {
             if (element.name.endswith(".js")) {
-                if (valid_names.includes(".js")) pluginExist = true
+                if (valid_names.includes(element.name)) pluginExist = true
             }
         });
         if (pluginExist) return true;
@@ -109,7 +108,7 @@ async function CheckRelease(owner: string, repo: string, client: github.GitHub) 
 
         (ReleaseContents.data.assets as [any]).forEach(element => {
             if (element.name.endswith(".js")) {
-                if (valid_names.includes(".js")) pluginExist = true
+                if (valid_names.includes(element.name)) pluginExist = true
             }
         });
         if (pluginExist) return true;
@@ -136,7 +135,7 @@ async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
 
         (DistContents.data as [any]).forEach(element => {
             if (element.name.endswith(".js")) {
-                if (valid_names.includes(".js")) pluginExist = true
+                if (valid_names.includes(element.name)) pluginExist = true
             }
         });
         if (pluginExist) return true;
