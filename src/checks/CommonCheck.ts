@@ -70,7 +70,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     if (repository.data["description"] !== null && repository.data["description"].length !== 0) {
         core.info(`✅  Repository has a description.`);
     } else {
-        core.error(`❌  Description.`);
+        core.setFailed(`❌  Description.`);
         await client.issues.createComment({
             owner: Issue.owner,
             repo: Issue.repo,

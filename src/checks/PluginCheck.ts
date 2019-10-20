@@ -93,6 +93,7 @@ async function CheckPluginLocation(owner: string, repo: string, client: github.G
         if (!pluginExist) throw "error"
         core.info(`✅  Plugin exist`);
     } catch (error) {
+        console.log(error)
         core.setFailed(`❌  Plugin exist`);
         await client.issues.createComment({
             owner: Issue.owner,

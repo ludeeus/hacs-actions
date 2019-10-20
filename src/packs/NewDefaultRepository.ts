@@ -21,6 +21,7 @@ export async function NewDefaultRepository(client: github.GitHub) {
                 await CommonCheck(owner, repo, element, client)
             } catch (error) {
                 core.setFailed("Something went wrong.");
+                return
               }
             
         });
