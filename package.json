@@ -1,6 +1,7 @@
 {
   "name": "hacs-actions",
   "private": true,
+  "test"
   "description": "Custom actions for the HACS org",
   "scripts": {
     "build": "tsc",
