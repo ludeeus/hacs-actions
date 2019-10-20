@@ -18,7 +18,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
 
     // Check if sender owns the repo.
     if (Sender !== undefined) {
-        if (owner !== Sender.login) {
+        if (owner === Sender.login) {
             core.info(`✅  ${Sender.login} is the owner of ${owner}/${repo}`);
         } else {
             await client.issues.createComment({

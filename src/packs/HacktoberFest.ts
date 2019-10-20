@@ -7,7 +7,7 @@ const isHacktoberfestLive = () => new Date().getMonth() == 9;
 
 export async function HacktoberFest(client: github.GitHub) {
     if (isHacktoberfestLive) {
-        if (Payload.action == "opened") {
+        if (Payload.action == "opened" || Payload.action == "reopened") {
             console.log(`Adding HacktoberFest message to #${Issue.number}`)
             await client.issues.createComment({
               owner: Issue.owner,
