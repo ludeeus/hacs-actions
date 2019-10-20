@@ -34,8 +34,8 @@ export async function HacktoberFest(client: github.GitHub) {
             issue_number: Issue.number
           })
 
-          JSON.parse(String(currentLabels.data["labels"])).forEach(async element => {
-            if (element === "Hacktoberfest" )
+          currentLabels.data["labels"].forEach(async element => {
+            if (element.name === "Hacktoberfest" )
               await client.issues.removeLabel({
                 owner: Issue.owner,
                 repo: Issue.repo,
