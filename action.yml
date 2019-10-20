@@ -1,9 +1,9 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Joakim Sørensen (@ludeeus)'
+description: 'Custom actions for the HACS org'
+author: 'Joakim Sørensen (@ludeeus)'
 inputs:
-  github-token:              # change this
-    description: 'TOKEN'
+  github-token:
+    description: "Github token, eksample:  '${{ secrets.GITHUB_TOKEN }}'"
     required: true
 runs:
   using: 'node12'

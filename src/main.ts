@@ -1,7 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { CheckRepository } from "./misc/CheckRepository"
 import { IssueGreeter, PullGreeter } from "./packs/Greeter"
 import { HacktoberFest } from "./packs/HacktoberFest"
 import { PullPayload, IssuePayload } from "./misc/contexts"
@@ -14,7 +13,7 @@ async function ExecuteAction() {
     const categoty: string = core.getInput('categoty')
 
     if (repository && categoty) {
-        CheckRepository(repository, categoty);
+        //CheckRepository(repository, categoty);
         return
     }
 
