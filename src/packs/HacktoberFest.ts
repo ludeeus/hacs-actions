@@ -10,6 +10,26 @@ export async function HacktoberFest(client: github.GitHub) {
 
       // Make sure we have a Hacktoberfest label
 
+      var currentLabels = await client.issues.listLabelsForRepo({
+        owner: Issue.owner,
+        repo: Issue.repo
+      })
+
+      var hacktoberfestExsist = false
+      currentLabels.data.forEach(element => {
+        if (element.name.toLocaleLowerCase() === "hacktoberfest" ) hacktoberfestExsist = true;
+      });
+
+      if (hacktoberfestExsist) {
+        await client.issues.updateLabel({
+          owner: Issue.owner,
+          repo: Issue.repo,
+          current_name: "hacktoberfest",
+          name: "Hacktoberfest",
+          color: "ff5500",
+          description: "Sign up for Hacktoberfest at https://hacktoberfest.digitalocean.com/"
+        })
+      } else {
         await client.issues.createLabel({
           owner: Issue.owner,
           repo: Issue.repo,
@@ -17,6 +37,8 @@ export async function HacktoberFest(client: github.GitHub) {
           color: "ff5500",
           description: "Sign up for Hacktoberfest at https://hacktoberfest.digitalocean.com/"
         })
+      }
+
 
         if (Payload.action == "opened" || Payload.action == "reopened") {
             console.log(`Adding HacktoberFest message to #${Issue.number}`)
@@ -39,13 +61,13 @@ export async function HacktoberFest(client: github.GitHub) {
         if (Payload.action == "closed" && !PullPayload!.merged) {
           console.log("Removing Hactoberfest label")
           // Get current labels
-          var currentLabels = await client.issues.get({
+          var activeLabels = await client.issues.get({
             owner: Issue.owner,
             repo: Issue.repo,
             issue_number: Issue.number
           })
 
-          currentLabels.data["labels"].forEach(async element => {
+          activeLabels.data["labels"].forEach(async element => {
             if (element.name === "Hacktoberfest" )
               await client.issues.removeLabel({
                 owner: Issue.owner,
