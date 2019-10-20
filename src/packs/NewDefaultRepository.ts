@@ -5,9 +5,7 @@ import { CommonCheck } from "../checks/CommonCheck"
 import { Base64 } from 'js-base64';
 
 export async function NewDefaultRepository(client: github.GitHub) {
-    // TODO: Enable the real check
-    //if (github.context.repo.owner === "hacs" && github.context.repo.repo === "repositories") {
-    if (github.context.repo.owner !== "hacs" && github.context.repo.repo !== "repositories") {
+    if (github.context.repo.owner === "hacs" && github.context.repo.repo === "repositories") {
         console.log("Running NewDefaultRepository")
 
         // Get Changed files
