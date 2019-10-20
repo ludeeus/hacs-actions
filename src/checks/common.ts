@@ -120,6 +120,10 @@ export async function CommonCheck(owner: string, repo: string, category: string,
         return
     }
 
+
+    // Category spesific checks.
+    const validCategories = ["integration", "plugin", "theme", "appdaemon", "python_script"]
+    if (!validCategories.includes(category)) core.setFailed(`${category} is not valid. (${validCategories})`);
     if (category == "integration") await IntegartionCheck(owner, repo, client);
 
 } 
