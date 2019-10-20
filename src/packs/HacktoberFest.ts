@@ -8,37 +8,34 @@ const isHacktoberfestLive = () => new Date().getMonth() == 9;
 export async function HacktoberFest(client: github.GitHub) {
     if (isHacktoberfestLive) {
 
-      // Make sure we have a Hacktoberfest label
+        // Make sure we have a Hacktoberfest label
 
-      var currentLabels = await client.issues.listLabelsForRepo({
-        owner: Issue.owner,
-        repo: Issue.repo
-      })
-
-      var hacktoberfestExsist = false
-      currentLabels.data.forEach(element => {
-        if (element.name.toLocaleLowerCase() === "hacktoberfest" ) hacktoberfestExsist = true;
-      });
-
-      if (hacktoberfestExsist) {
-        await client.issues.updateLabel({
+        var currentLabels = await client.issues.listLabelsForRepo({
           owner: Issue.owner,
-          repo: Issue.repo,
-          current_name: "hacktoberfest",
-          name: "Hacktoberfest",
-          color: "ff5500",
-          description: "Sign up for Hacktoberfest at https://hacktoberfest.digitalocean.com/"
+          repo: Issue.repo
         })
-      } else {
-        await client.issues.createLabel({
-          owner: Issue.owner,
-          repo: Issue.repo,
-          name: "Hacktoberfest",
-          color: "ff5500",
-          description: "Sign up for Hacktoberfest at https://hacktoberfest.digitalocean.com/"
-        })
-      }
 
+        var hacktoberfestExsist = false
+        currentLabels.data.forEach(element => {
+          if (element.name.toLocaleLowerCase() === "hacktoberfest" ) hacktoberfestExsist = true;
+        });
+
+        if (hacktoberfestExsist) {
+          await client.issues.updateLabel({
+            owner: Issue.owner,
+            repo: Issue.repo,
+            current_name: "hacktoberfest",
+            name: "Hacktoberfest",
+            color: "ff5500"
+          })
+        } else {
+          await client.issues.createLabel({
+            owner: Issue.owner,
+            repo: Issue.repo,
+            name: "Hacktoberfest",
+            color: "ff5500"
+          })
+        }
 
         if (Payload.action == "opened" || Payload.action == "reopened") {
             console.log(`Adding HacktoberFest message to #${Issue.number}`)
