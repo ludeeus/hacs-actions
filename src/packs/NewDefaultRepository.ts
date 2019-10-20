@@ -22,7 +22,7 @@ async function getChangedFiles(client: github.GitHub, prNumber: number){
     });
   
     console.log(listFilesResponse)
-    const changedFiles = listFilesResponse.data.map(f => f.filename);
+    const changedFiles = listFilesResponse.data.map(f => {f.filename, f.contents_url});
     console.log(changedFiles)
   
     return changedFiles;
