@@ -163,7 +163,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
 } 
 
 async function CategoryChecks(category, owner, repo, client) {
-    const validCategories = ["integration", "plugin", "theme", "appdaemon", "python_script"]
+    const validCategories = ["integration", "plugin", "theme", "appdaemon", "python_script", "list"]
     if (!validCategories.includes(category)) core.setFailed(`${category} is not valid. (${validCategories})`);
 
     
@@ -172,4 +172,5 @@ async function CategoryChecks(category, owner, repo, client) {
     if (category == "theme") await ThemeCheck(owner, repo, client);
     if (category == "appdaemon") await AppDaemonCheck(owner, repo, client);
     if (category == "python_script") await PythonScriptCheck(owner, repo, client);
+    if (category == "list") await PythonScriptCheck(owner, repo, client);
 }
