@@ -53,8 +53,7 @@ async function getFileDiff(client: github.GitHub, prNumber: number, file: string
     const {data: Contents} = await client.repos.getContents({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
-        path: file,
-        ref: PullRef
+        path: file
     })
 
     var Decoded = JSON.parse(new Buffer(Contents["content"], 'base64').toString('utf-8'));
