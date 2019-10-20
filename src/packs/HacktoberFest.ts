@@ -27,11 +27,18 @@ export async function HacktoberFest(client: github.GitHub) {
 
         if (Payload.action == "closed" && !PullPayload!.merged) {
           console.log("Removing Hactoberfest label")
+          // Get current labels
+          var currentLabels = await client.issues.get({
+            owner: Issue.owner,
+            repo: Issue.repo,
+            issue_number: Issue.number
+          })
+          console.log(currentLabels)
             await client.issues.removeLabel({
               owner: Issue.owner,
               repo: Issue.repo,
-                issue_number: Issue.number,
-                name: "Hacktoberfest"
+              issue_number: Issue.number,
+              name: "Hacktoberfest"
               })
 
             await client.issues.addLabels({

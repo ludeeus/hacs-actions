@@ -3,16 +3,12 @@ import * as github from '@actions/github';
 import Octokit from "@octokit/rest";
 import { Issue, Sender } from "../misc/contexts"
 
-const octokit = new Octokit({
-    auth: `token ${core.getInput('github-token', {required: true})}`
-})
-
 
 export async function CommonCheck(owner: string, repo: string, category: string, client: github.GitHub) {
 
     // Check if repository exists
     try {
-        var repository = await octokit.repos.get({owner: owner, repo: repo})
+        var repository = await client.repos.get({owner: owner, repo: repo})
         core.info(`✅  Reporsitory exist at ${owner}/${repo}`)
 
     } catch (error) {
@@ -55,7 +51,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
     // Get 'README'
     try {
         var ReadmeExists = false;
-        var BaseFiles = await octokit.repos.getContents({
+        var BaseFiles = await client.repos.getContents({
             owner: owner,
             repo: repo,
             path: ""
@@ -78,7 +74,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
 
     // Get 'hacs.json'
     try {
-        var hacsManifest = await octokit.repos.getContents({
+        var hacsManifest = await client.repos.getContents({
             owner: owner,
             repo: repo,
             path: "hacs.json"
