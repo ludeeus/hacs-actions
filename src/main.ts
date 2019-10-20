@@ -11,13 +11,13 @@ async function ExecuteAction() {
   try {
     const client = new github.GitHub(core.getInput('github-token', {required: true}));
     const repository: string = core.getInput('repository')
-    const categoty: string = core.getInput('categoty')
+    const category: string = core.getInput('category')
 
     if (repository.length !== 0 
-      && categoty.length !== 0) {
+      && category.length !== 0) {
         var owner = repository.split("/")[0]
         var repo = repository.split("/")[1]
-        await CommonCheck(owner, repo, categoty, client)
+        await CommonCheck(owner, repo, category, client)
         return
     }
 
