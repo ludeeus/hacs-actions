@@ -7,6 +7,17 @@ const isHacktoberfestLive = () => new Date().getMonth() == 9;
 
 export async function HacktoberFest(client: github.GitHub) {
     if (isHacktoberfestLive) {
+
+      // Make sure we have a Hacktoberfest label
+
+        await client.issues.createLabel({
+          owner: Issue.owner,
+          repo: Issue.repo,
+          name: "Hacktoberfest",
+          color: "ff5500",
+          description: "Sign up for Hacktoberfest at https://hacktoberfest.digitalocean.com/"
+        })
+
         if (Payload.action == "opened" || Payload.action == "reopened") {
             console.log(`Adding HacktoberFest message to #${Issue.number}`)
             await client.issues.createComment({
