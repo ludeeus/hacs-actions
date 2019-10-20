@@ -3,7 +3,7 @@ description: 'Custom actions for the HACS org'
 author: 'Joakim Sørensen (@ludeeus)'
 inputs:
   github-token:
-    description: "Github token, eksample:  '${{ secrets.GITHUB_TOKEN }}'"
+    description: "Github token"
     required: true
 runs:
   using: 'node12'
