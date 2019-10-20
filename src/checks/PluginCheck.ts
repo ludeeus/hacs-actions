@@ -126,6 +126,7 @@ async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
         `${repo}.umd.js`,
         `${repo}-bundle.js`,
     ]
+    console.log(valid_names)
     try {
         var DistContents = await client.repos.getContents({
             owner: owner,
@@ -134,6 +135,7 @@ async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
         });
 
         (DistContents.data as [any]).forEach(element => {
+            console.log(element.name)
             if (element.name.endswith(".js")) {
                 if (valid_names.includes(element.name)) pluginExist = true
             }
