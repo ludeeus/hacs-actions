@@ -17,14 +17,23 @@ async function CheckImportType(owner: string, repo: string, client: github.GitHu
             path: ""
         });
 
-        var readme: string = "";
+        var readme: any = undefined;
         (BaseFiles.data as [any]).forEach(element => {
-            console.log(element)
-            if (String(element.name).toLowerCase() === "readme") readme = Base64.decode(element.content);
-            if (String(element.name).toLowerCase() === "readme.md") readme = Base64.decode(element.content);
+            if (String(element.name).toLowerCase() === "readme") readme = element;
+            if (String(element.name).toLowerCase() === "readme.md") readme = element;
         });
 
+        if (readme === undefined) throw "error"
+        var EncodedReadme = await client.repos.getContents({
+            owner: owner,
+            repo: repo,
+            path: readme.path
+        });
+
+        readme = Base64.decode(EncodedReadme.data["content"]);
+
         console.log(readme)
+        if (readme === undefined) throw "error"
         if (readme.includes("type: module") || readme.includes("type: js")) {
             core.info(`✅  JS import type defined`);
         } else {
