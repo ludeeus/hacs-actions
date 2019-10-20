@@ -23,12 +23,11 @@ async function CheckImportType(owner: string, repo: string, client: github.GitHu
             if (String(element.name).toLowerCase() === "readme.md") readme = Base64.decode(element.content);
         });
 
-        if (readme.length >0) {
-            if (readme.includes("type: module") || readme.includes("type: js")) {
-                core.info(`✅  JS import type defined`);
-            } else {
-                throw "error"
-            }
+        console.log(readme)
+        if (readme.includes("type: module") || readme.includes("type: js")) {
+            core.info(`✅  JS import type defined`);
+        } else {
+            throw "error"
         }
 
     } catch (error) {
@@ -122,7 +121,6 @@ async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
         `${repo}.umd.js`,
         `${repo}-bundle.js`,
     ]
-    console.log(valid_names)
     try {
         var RootContents = await client.repos.getContents({
             owner: owner,
@@ -131,7 +129,6 @@ async function CheckRoot(owner: string, repo: string, client: github.GitHub) {
         });
 
         (RootContents.data as [any]).forEach(element => {
-            console.log(element.name)
             if (valid_names.includes(element.name)) pluginExist = true
         });
         if (pluginExist) return true;
