@@ -40,7 +40,7 @@ async function PullRequestActions(client: github.GitHub) {
   console.log("Running PullRequestActions")
   await PullGreeter(client);
   await HacktoberFest(client);
-  await NewDefaultRepository(client)
+  if (Payload.action !== "closed") await NewDefaultRepository(client)
   await ClearTempLabel(client)
 }
 
