@@ -1,6 +1,6 @@
-import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { Issue } from "../misc/contexts"
+import { CommonCheck } from "../checks/common"
 
 export async function NewDefaultRepository(client: github.GitHub) {
     if (github.context.repo.owner !== "hacs" && github.context.repo.repo !== "repositories") {
@@ -10,11 +10,13 @@ export async function NewDefaultRepository(client: github.GitHub) {
         var changedFiles = await getChangedFiles(client, Issue.number)
 
         changedFiles.forEach(async element => {
-            await getFileDiff(client, Issue.number, element)
+            var changed = await getFileDiff(client, Issue.number, element)
+            var owner = changed[0].split("/")[0]
+            var repo = changed[0].split("/")[1]
+            await CommonCheck(owner, repo, element, client)
         });
     }
 }
-
 
 
 
@@ -64,6 +66,5 @@ async function getFileDiff(client: github.GitHub, prNumber: number, file: string
         if (!Decoded.includes(element)) NewItems.push(element);
     });
 
-
-    console.log(NewItems)
+    return NewItems
   }
