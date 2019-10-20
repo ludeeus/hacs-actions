@@ -19,6 +19,7 @@ async function CheckImportType(owner: string, repo: string, client: github.GitHu
 
         var readme: string = "";
         (BaseFiles.data as [any]).forEach(element => {
+            console.log(element)
             if (String(element.name).toLowerCase() === "readme") readme = Base64.decode(element.content);
             if (String(element.name).toLowerCase() === "readme.md") readme = Base64.decode(element.content);
         });
