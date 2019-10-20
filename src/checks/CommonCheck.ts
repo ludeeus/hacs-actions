@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import { Base64 } from 'js-base64';
 import { Issue, Sender } from "../misc/contexts"
 import { IntegartionCheck } from "./IntegartionCheck"
 import { ThemeCheck } from "./ThemeCheck"
@@ -109,7 +110,7 @@ export async function CommonCheck(owner: string, repo: string, category: string,
             repo: repo,
             path: "hacs.json"
         })
-        var hacsManifestDecoded = JSON.parse(new Buffer(hacsManifest.data["content"], 'base64').toString('utf-8'));
+        var hacsManifestDecoded = JSON.parse(Base64.decode(hacsManifest.data["content"]));
 
         if (!hacsManifestDecoded["name"]) throw "Data not correct";
         core.info(`✅  hacs.json`);

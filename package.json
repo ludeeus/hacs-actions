@@ -15,7 +15,8 @@
   "dependencies": {
     "@actions/core": "^1.0.0",
     "@actions/github": "^1.0.0",
-    "@octokit/rest": "^16.33.1"
+    "@octokit/rest": "^16.33.1",
+    "js-base64": "^2.5.1"
   },
   "devDependencies": {
     "@types/node": "^12.11.1",

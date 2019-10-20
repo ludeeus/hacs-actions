@@ -1,6 +1,7 @@
 import * as github from '@actions/github';
 import * as core from '@actions/core';
 import { Issue } from "../misc/contexts"
+import { Base64 } from 'js-base64';
 
 export async function IntegartionCheck(owner: string, repo: string, client: github.GitHub) {
 
@@ -30,7 +31,7 @@ export async function IntegartionCheck(owner: string, repo: string, client: gith
             repo: repo,
             path: Integration.data[0].path + "/manifest.json"
         })
-        var decoded = JSON.parse(new Buffer(IntegrationManifest.data["content"], 'base64').toString('utf-8'));
+        var decoded = JSON.parse(Base64.decode(IntegrationManifest.data["content"]));
 
         if (!decoded["domain"]) throw "wrong manifest"
 

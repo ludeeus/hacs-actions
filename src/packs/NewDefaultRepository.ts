@@ -1,6 +1,7 @@
 import * as github from '@actions/github';
 import { Issue } from "../misc/contexts"
 import { CommonCheck } from "../checks/CommonCheck"
+import { Base64 } from 'js-base64';
 
 export async function NewDefaultRepository(client: github.GitHub) {
     // TODO: Enable the real check
@@ -52,7 +53,7 @@ async function getFileDiff(client: github.GitHub, prNumber: number, file: string
         ref: PullRef
     })
 
-    var ChangedDecoded = JSON.parse(new Buffer(ChangedContents["content"], 'base64').toString('utf-8'));
+    var ChangedDecoded = JSON.parse(Base64.decode(ChangedContents["content"]));
 
     const {data: Contents} = await client.repos.getContents({
         owner: github.context.repo.owner,
@@ -60,7 +61,7 @@ async function getFileDiff(client: github.GitHub, prNumber: number, file: string
         path: file
     })
 
-    var Decoded = JSON.parse(new Buffer(Contents["content"], 'base64').toString('utf-8'));
+    var Decoded = JSON.parse(Base64.decode(Contents["content"]));
 
     var NewItems: string[] = []
 
