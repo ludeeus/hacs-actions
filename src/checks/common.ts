@@ -1,16 +1,14 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import Octokit from "@octokit/rest";
-//import { Sender } from "../misc/contexts"
-
-const Sender = {login: "custom-components"};
+import { Issue, Sender } from "../misc/contexts"
 
 const octokit = new Octokit({
     auth: `token ${core.getInput('github-token', {required: true})}`
 })
 
 
-export async function CommonCheck(owner: string = "custom-components", repo: string = "hacs") {
+export async function CommonCheck(owner: string, repo: string, category: string, client: github.GitHub) {
 
     // Check if repository exists
     try {
@@ -27,16 +25,12 @@ export async function CommonCheck(owner: string = "custom-components", repo: str
         if (owner !== Sender.login) {
             core.info(`✅  ${Sender.login} is the owner of ${owner}/${repo}`);
         } else {
-            // TODO: Create a failed status check/"issue" message.
-            await octokit.checks.create({
-                owner: owner,
-                repo: repo,
-                name: "Submitter is owner, this can fail but will require a manual review.",
-                head_sha: github.context.sha,
-                conclusion: "action_required",
-                details_url: ""
-                
-            })
+            await client.issues.createComment({
+                owner: Issue.owner,
+                repo: Issue.repo,
+                issue_number: Issue.number,
+                body: `It does not look like ${Sender!.login} is the owner of of ${owner}/${repo}`
+              });
             core.error(`❌  ${Sender.login} is not the owner of ${owner}/${repo}`);
         }
     }
@@ -100,4 +94,4 @@ export async function CommonCheck(owner: string = "custom-components", repo: str
 } 
 
 
-CommonCheck()
+//CommonCheck()
