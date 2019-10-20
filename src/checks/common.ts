@@ -6,7 +6,7 @@ import Octokit from "@octokit/rest";
 const Sender = {login: "custom-components"};
 
 const octokit = new Octokit({
-    //auth: `token ${core.getInput('github-token', {required: true})}`
+    auth: `token ${core.getInput('github-token', {required: true})}`
 })
 
 
