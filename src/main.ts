@@ -14,9 +14,7 @@ async function ExecuteAction() {
     const categoty: string = core.getInput('categoty')
 
     if (repository.length !== 0 
-      && repository !== undefined 
-      && categoty.length !== 0
-      && categoty !== undefined ) {
+      && categoty.length !== 0) {
         var owner = repository.split("/")[0]
         var repo = repository.split("/")[1]
         await CommonCheck(owner, repo, categoty, client)
