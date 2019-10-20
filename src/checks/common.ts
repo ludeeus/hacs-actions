@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 import { Issue, Sender } from "../misc/contexts"
+import { IntegartionCheck } from "./IntegartionCheck"
 
 
 export async function CommonCheck(owner: string, repo: string, category: string, client: github.GitHub) {
@@ -116,6 +117,8 @@ export async function CommonCheck(owner: string, repo: string, category: string,
           });
         return
     }
+
+    if (category == "integration") await IntegartionCheck(owner, repo, client);
 
 } 
 
