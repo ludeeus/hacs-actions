@@ -8,10 +8,10 @@ jobs:
     name: Actions
     runs-on: ubuntu-latest
     steps:
-      - uses: hacs/actions@master
+      - uses: ludeeus/hacs-actions@master
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - uses: hacs/actions@master
+      - uses: ludeeus/hacs-actions@master
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           repository: "custom-components/hacs"
